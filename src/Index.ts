@@ -1,3 +1,6 @@
+/**
+ * Anslo is a wrapper around JSON.stringify and JSON.parse designed to remember original state.
+ */
 export class Anslo {
 
     /**
