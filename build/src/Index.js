@@ -1,8 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Anslo is a wrapper around JSON.stringify and JSON.parse designed to remember original state.
+ */
 var Anslo = /** @class */ (function () {
+    /**
+     * Create a new instance
+     * @param constructors List of all constructors you want to remember
+     */
     function Anslo(constructors) {
         var _this = this;
+        /**
+         * List of the constructors to check for when parsing
+         */
         this.constructors = {};
         if (constructors) {
             constructors.forEach(function (c) {
@@ -10,6 +20,11 @@ var Anslo = /** @class */ (function () {
             });
         }
     }
+    /**
+     * Create a new instance of Anslo remembering all install constructors, but with the ability overwrite
+     * previously installed constructors with the same name.
+     * @param constructors
+     */
     Anslo.prototype.split = function (constructors) {
         if (constructors === void 0) { constructors = []; }
         var passables = [];
@@ -19,12 +34,20 @@ var Anslo = /** @class */ (function () {
         constructors.forEach(function (c) { return passables.push(c); });
         return new Anslo(passables);
     };
+    /**
+     * Remove a constructor from the list to check for
+     * @param constructor
+     */
     Anslo.prototype.forget = function (constructor) {
         var name = typeof constructor === "string" ? constructor : constructor.name;
         if (this.constructors[name]) {
             delete this.constructors[name];
         }
     };
+    /**
+     * convert javascript data to string
+     * @param obj
+     */
     Anslo.prototype.stringify = function (obj) {
         var _this = this;
         var write = function (obj) {
@@ -45,6 +68,11 @@ var Anslo = /** @class */ (function () {
         write(obj);
         return JSON.stringify(obj);
     };
+    /**
+     * convert a string to javascript data remembering original state
+     * @param str
+     * @param reviver
+     */
     Anslo.prototype.parse = function (str, reviver) {
         var _this = this;
         return JSON.parse(str, function (key, value) {
@@ -85,3 +113,4 @@ var Anslo = /** @class */ (function () {
     return Anslo;
 }());
 exports.Anslo = Anslo;
+exports.default = Anslo;
