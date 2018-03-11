@@ -1,7 +1,7 @@
 {
   "name": "anslo",
   "version": "0.0.4",
-  "description": "",
+  "description": "Anslo is a wrapper around JSON.stringify and JSON.parse designed to remember original state",
   "main": "build/src/index",
   "types": "build/src/Index",
   "scripts": {
