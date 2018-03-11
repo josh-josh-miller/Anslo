@@ -81,3 +81,5 @@ export class Anslo {
         })
     }
 }
+
+export default Anslo;
