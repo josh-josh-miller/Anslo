@@ -1,4 +1,4 @@
-# Anslo 0.0.4
+# Anslo
 
 Anslo is a wrapper around JSON.stringify and JSON.parse designed to remember original state.
 
