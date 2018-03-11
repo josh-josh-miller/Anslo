@@ -1,7 +1,14 @@
 export class Anslo {
 
+    /**
+     * List of the constructors to check for when parsing
+     */
     public constructors: { [key: string]: (new () => any) } = {};
 
+    /**
+     * Create a new instance
+     * @param constructors List of all constructors you want to remember
+     */
     public constructor(constructors?: (new () => any)[]) {
         if (constructors) {
             constructors.forEach(c => {
@@ -10,6 +17,11 @@ export class Anslo {
         }
     }
 
+    /**
+     * Create a new instance of Anslo remembering all install constructors, but with the ability overwrite
+     * previously installed constructors with the same name.
+     * @param constructors 
+     */
     public split(constructors: (new () => any)[] = []) {
         var passables = [];
         for(var iterator in this.constructors) {
@@ -19,6 +31,10 @@ export class Anslo {
         return new Anslo(passables);
     }
 
+    /**
+     * Remove a constructor from the list to check for
+     * @param constructor 
+     */
     public forget(constructor: string | (new () => any)) {
         var name:string = typeof constructor === "string" ? constructor : constructor.name;
         if(this.constructors[name]) {
@@ -26,6 +42,10 @@ export class Anslo {
         }
     }
 
+    /**
+     * convert javascript data to string
+     * @param obj 
+     */
     public stringify(obj: any) {
         var write = (obj) => {
             if (typeof obj === "object" && obj !== null) {
@@ -45,6 +65,11 @@ export class Anslo {
         return JSON.stringify(obj);
     }
 
+    /**
+     * convert a string to javascript data remembering original state
+     * @param str 
+     * @param reviver 
+     */
     public parse<Context extends any>(str: string, reviver?: (key: string, value: any) => any): Context {
         return JSON.parse(str, (key, value) => {
             if (this.constructors["Date"]) {
