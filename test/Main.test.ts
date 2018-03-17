@@ -1,5 +1,5 @@
 import "jest"
-import { Anslo } from "../src/Index";
+import Anslo = require("../src/Index");
 import { Model } from "./Model.test";
 var anslo = new Anslo([
     Model.User, 

@@ -1,7 +1,7 @@
 /**
  * Anslo is a wrapper around JSON.stringify and JSON.parse designed to remember original state.
  */
-export class Anslo {
+export = class Anslo {
 
     /**
      * List of the constructors to check for when parsing
@@ -12,7 +12,7 @@ export class Anslo {
      * Create a new instance
      * @param constructors List of all constructors you want to remember
      */
-    public constructor(constructors?: (new () => any)[]) {
+    public constructor(constructors: (new () => any)[] = []) {
         if (constructors) {
             constructors.forEach(c => {
                 this.constructors[c.name] = c;
@@ -109,5 +109,3 @@ export class Anslo {
         })
     }
 }
-
-export default Anslo;

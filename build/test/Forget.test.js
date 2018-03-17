@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 require("jest");
-var Index_1 = require("../src/Index");
+var Anslo = require("../src/Index");
 var Model_test_1 = require("./Model.test");
-var anslo = new Index_1.Anslo([
+var anslo = new Anslo([
     Model_test_1.Model.User,
     Model_test_1.Model.Note
 ]);

@@ -1,60 +1,39 @@
 # Anslo
 
-Anslo is a wrapper around JSON.stringify and JSON.parse designed to remember original state.
+Anslo is a json serializer and parser that recursively remembers the original instance's state.
 
-Let's say we two models
-```ts
-export class User {
-    public id: number;
-    public name: string;
-    public email: string;
-    public posts: Post[] = [];
-
-    public doSomething() {
-        alert(this.name);
-    }
-}
-
-export class Post {
-    public id: number;
-    public title: string;
-    public content: string;
-}
+Installation
+```bash
+npm install anslo
 ```
 
-We do our work with these models and serialize the end result.
-```ts
-function controller() {
-    var user = new User;
-    user.name = "Something";
-    user.posts.push(new Post);
-    send(JSON.stringify(user));
+Getting set up
+```js
+//pull in anslo
+const Anslo = require("anslo");
+
+//get your models
+const User = require("./User");
+const Note = require("./Note");
+
+//you must supply the models you wish to transform
+const anslo = new Anslo([User, Note, Date])
+```
+
+Stringify to remember instance state;
+```js
+async function usersToJson() {
+    var users = await User.all();
+    return anslo.stringify(users);
 }
 ```
-When we stringify the "user", all information about the original state is lost.
 
-Let's re-work the code a litte bit
-```ts
-import { Anslo } from "anslo";
-
-const anslo = new Anslo([User, Post]);
-
-function controller() {
-    var user = new User;
-    user.name = "Something"
-    user.posts.push(new Post);
-    send(anslo.stringify(user));
+Parse to remember instance state.
+```js
+function findActiveUsersFromString(json) {
+    var users = anslo.parse(json);
+    return users.filter(user => {
+        return user.isActive();
+    })
 }
 ```
-Outputs
-```json
-{"name":"Something", "#type": "User", "posts": [{"#type":"Post"}]}
-```
-
-When we want to parse the string, you will be returned the original state.
-```ts
-var user = anslo.parse(jsonString);
-user.doSomething();
-```
-
-This comes in super handy when you have multiple nested states to remember.

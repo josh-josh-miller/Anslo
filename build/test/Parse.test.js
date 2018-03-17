@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 require("jest");
-var Index_1 = require("../src/Index");
+var Anslo = require("../src/Index");
 var Model_test_1 = require("./Model.test");
-var anslo = new Index_1.Anslo([
+var anslo = new Anslo([
     Model_test_1.Model.User,
     Model_test_1.Model.Note,
     Model_test_1.Model.Settings
 ]);
-var anslo2 = new Index_1.Anslo([
+var anslo2 = new Anslo([
     Model_test_1.Model.User,
     Model_test_1.Model.Note,
     Model_test_1.Model.Settings,
     Date
 ]);
-var anslo3 = new Index_1.Anslo([]);
+var anslo3 = new Anslo([]);
 var string = JSON.stringify({
     name: "Something name",
     created: new Date(),

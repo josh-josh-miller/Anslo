@@ -1,14 +1,11 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * Anslo is a wrapper around JSON.stringify and JSON.parse designed to remember original state.
- */
-var Anslo = /** @class */ (function () {
+module.exports = /** @class */ (function () {
     /**
      * Create a new instance
      * @param constructors List of all constructors you want to remember
      */
     function Anslo(constructors) {
+        if (constructors === void 0) { constructors = []; }
         var _this = this;
         /**
          * List of the constructors to check for when parsing
@@ -112,5 +109,3 @@ var Anslo = /** @class */ (function () {
     };
     return Anslo;
 }());
-exports.Anslo = Anslo;
-exports.default = Anslo;
