@@ -2,8 +2,8 @@
   "name": "anslo",
   "version": "0.0.10",
   "description": "Anslo is a wrapper around JSON.stringify and JSON.parse designed to remember original state",
-  "main": "build/src/Index",
-  "types": "build/src/Index",
+  "main": "build/src/Index.js",
+  "types": "build/src/Index.d.ts",
   "scripts": {
     "test": "jest --coverage",
     "build": "tsc"
