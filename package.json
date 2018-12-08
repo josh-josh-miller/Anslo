@@ -2,11 +2,11 @@
   "name": "anslo",
   "version": "0.0.10",
   "description": "Anslo is a wrapper around JSON.stringify and JSON.parse designed to remember original state",
-  "main": "build/src/Index.js",
-  "types": "build/src/Index.d.ts",
+  "main": "dist/src/index",
+  "types": "dist/src/index.d.ts",
   "scripts": {
-    "test": "jest --coverage",
-    "build": "tsc"
+    "test": "jest",
+    "build": "tsc --watch"
   },
   "repository": {
     "type": "git",
@@ -20,10 +20,19 @@
   "homepage": "https://github.com/josh-josh-miller/anslo#readme",
   "devDependencies": {
     "@types/jest": "^22.2.0",
+    "@types/node": "^10.12.12",
     "jest": "^22.4.2",
+    "ts-jest": "^23.10.5",
     "typescript": "^2.7.2"
   },
   "jest": {
-    "collectCoverage": true
+    "testEnvironment": "node",
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "dist/src/**/*.js",
+      "!**dist/src/interfaces/**"
+    ],
+    "verbose": true,
+    "testURL": "http://localhost/"
   }
 }
