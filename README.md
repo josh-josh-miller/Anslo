@@ -1,39 +1,56 @@
 # Anslo
+A json serializer/parser that can remember state.
 
-Anslo is a json serializer and parser that recursively remembers the original instance's state.
-
-Installation
+### Installation
 ```bash
-npm install anslo
+npm install --save anslo
 ```
 
-Getting set up
-```js
-//pull in anslo
-const Anslo = require("anslo");
+Let's say you are working with Electron and you would like to save
+state to a file. You wished that there was a great way to 
+get all that data back just the way you saved it. How would Anslo handle
+the serialization?
 
-//get your models
-const User = require("./User");
-const Note = require("./Note");
-
-//you must supply the models you wish to transform
-const anslo = new Anslo([User, Note, Date])
-```
-
-Stringify to remember instance state;
-```js
-async function usersToJson() {
-    var users = await User.all();
-    return anslo.stringify(users);
+We create our model.
+```ts
+namespace Model {
+    export class User {
+        public name: string;
+        public email: string;
+    }
 }
+
+export default Model;
 ```
 
-Parse to remember instance state.
-```js
-function findActiveUsersFromString(json) {
-    var users = anslo.parse(json);
-    return users.filter(user => {
-        return user.isActive();
-    })
-}
+```ts
+//Import it..
+import Anslo = require("anslo");
+
+//-------
+
+let anslo = new Anslo(Model);
+
+//-----------------
+
+//Create our user to stringify
+let user = new Model.User();
+user.name = "something"
+
+//-------------------
+
+//We stringify the user
+let down = anslo.stringify({
+    user,
+    arrayOfUsers: [ user, user, user ]
+    ready: true
+});
+
+// Anslo recursively parses the user back to its original state.
+let up = anslo.parse(down);
+
+//expect(up.user).toBeInstanceOf(Model.User)
+//=>true
 ```
+
+That's it.
