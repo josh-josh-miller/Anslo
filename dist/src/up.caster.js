@@ -58,17 +58,17 @@ var UpCaster = /** @class */ (function () {
         if (!is_1.default.obj(graph)) {
             exceptions_1.default.invalidGraph(this.namespace);
         }
-        if (typeof graph.type !== "string") {
+        if (typeof graph.t !== "string") {
             exceptions_1.default.invalidGraph(this.namespace);
         }
         //-----------------
-        if (graph.type === "array") {
+        if (graph.t === "array") {
             return this.unGraphArray(graph);
         }
-        else if (graph.type === "date") {
+        else if (graph.t === "date") {
             return this.unGraphDate(graph);
         }
-        else if (graph.type === "object") {
+        else if (graph.t === "object") {
             return this.unGraphObject(graph);
         }
         else {
@@ -82,20 +82,20 @@ var UpCaster = /** @class */ (function () {
     UpCaster.prototype.unGraphArray = function (graph) {
         //Validations
         //-------------
-        if (typeof graph.references !== "number") {
+        if (typeof graph.r !== "number") {
             exceptions_1.default.invalidGraph(this.namespace);
         }
-        if (!is_1.default.obj(graph.contents)) {
+        if (!is_1.default.obj(graph.c)) {
             exceptions_1.default.invalidGraph(this.namespace);
         }
         //-------------
-        var pointer = this.pointers[graph.references];
+        var pointer = this.pointers[graph.r];
         if (!Array.isArray(pointer)) {
             exceptions_1.default.invalidPointer(this.namespace);
         }
         //-------------
-        for (var iterator in graph.contents) {
-            pointer[iterator] = this.ungraphData(graph.contents[iterator]);
+        for (var iterator in graph.c) {
+            pointer[iterator] = this.ungraphData(graph.c[iterator]);
         }
         return pointer;
     };
@@ -106,14 +106,14 @@ var UpCaster = /** @class */ (function () {
     UpCaster.prototype.unGraphDate = function (graph) {
         //Validations
         //-------------
-        if (typeof graph.references !== "number") {
+        if (typeof graph.r !== "number") {
             exceptions_1.default.invalidGraph(this.namespace);
         }
-        if (typeof graph.value !== "string") {
+        if (typeof graph.v !== "string") {
             exceptions_1.default.invalidGraph(this.namespace);
         }
         //-------------
-        var pointer = this.pointers[graph.references];
+        var pointer = this.pointers[graph.r];
         if (pointer === undefined) {
             exceptions_1.default.invalidGraph(this.namespace);
         }
@@ -121,7 +121,7 @@ var UpCaster = /** @class */ (function () {
             return pointer;
         }
         else {
-            return this.pointers[graph.references] = new Date(graph.value);
+            return this.pointers[graph.r] = new Date(graph.v);
         }
     };
     /**
@@ -131,31 +131,31 @@ var UpCaster = /** @class */ (function () {
     UpCaster.prototype.unGraphObject = function (graph) {
         //Validations
         //-------------
-        if (typeof graph.references !== "number") {
+        if (typeof graph.r !== "number") {
             exceptions_1.default.invalidGraph(this.namespace);
         }
         //-------------
-        var pointer = this.pointers[graph.references];
+        var pointer = this.pointers[graph.r];
         //when an object has context
         for (var iterator in this.model) {
             var model = this.model[iterator];
-            if (model[this.namespace] === graph.context) {
+            if (model[this.namespace] === graph.cx) {
                 if (pointer instanceof model) {
                     return pointer;
                 }
                 else {
-                    var instance_1 = this.pointers[graph.references] = new model;
-                    for (var instanceIterator in graph.contents) {
-                        instance_1[instanceIterator] = this.ungraphData(graph.contents[instanceIterator]);
+                    var instance_1 = this.pointers[graph.r] = new model;
+                    for (var instanceIterator in graph.c) {
+                        instance_1[instanceIterator] = this.ungraphData(graph.c[instanceIterator]);
                     }
                     return instance_1;
                 }
             }
         }
         //when just a generic object
-        var instance = this.pointers[graph.references];
-        for (var instanceIterator in graph.contents) {
-            instance[instanceIterator] = this.ungraphData(graph.contents[instanceIterator]);
+        var instance = this.pointers[graph.r];
+        for (var instanceIterator in graph.c) {
+            instance[instanceIterator] = this.ungraphData(graph.c[instanceIterator]);
         }
         return instance;
     };
@@ -166,11 +166,11 @@ var UpCaster = /** @class */ (function () {
     UpCaster.prototype.unGraphPrimitives = function (graph) {
         //Validations
         //-------------
-        if (typeof graph.references !== "number") {
+        if (typeof graph.r !== "number") {
             exceptions_1.default.invalidGraph(this.namespace);
         }
         //-------------
-        return this.pointers[graph.references];
+        return this.pointers[graph.r];
     };
     /**
      * Returns the instance and handles

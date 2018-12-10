@@ -6,8 +6,8 @@ function failUngraphObject() {
     var data = {
         pointers: [],
         graph: {
-            references: null,
-            type: "object"
+            r: null,
+            t: "object"
         }
     };
     expect(function () {

@@ -74,13 +74,13 @@ var DownCaster = /** @class */ (function () {
         var index = this.pointers.indexOf(arr);
         if (index < 0) {
             index = (this.pointers.push(arr)) - 1;
-            arrayGraph.contents = {};
+            arrayGraph.c = {};
             arr.forEach(function (item, idx) {
-                return arrayGraph.contents[idx] = _this.graphData(item);
+                return arrayGraph.c[idx] = _this.graphData(item);
             });
         }
-        arrayGraph.type = "array";
-        arrayGraph.references = index;
+        arrayGraph.t = "array";
+        arrayGraph.r = index;
         return arrayGraph;
     };
     /**
@@ -93,9 +93,9 @@ var DownCaster = /** @class */ (function () {
         if (index < 0) {
             index = (this.pointers.push(date)) - 1;
         }
-        dateGraph.type = "date";
-        dateGraph.references = index;
-        dateGraph.value = date;
+        dateGraph.t = "date";
+        dateGraph.r = index;
+        dateGraph.v = date;
         return dateGraph;
     };
     /**
@@ -107,18 +107,18 @@ var DownCaster = /** @class */ (function () {
         var index = this.pointers.indexOf(obj);
         if (index < 0) {
             index = (this.pointers.push(obj)) - 1;
-            objectGraph.contents = {};
+            objectGraph.c = {};
             for (var iterator in obj) {
                 if (obj.hasOwnProperty(iterator)) {
-                    objectGraph.contents[iterator] = this.graphData(obj[iterator]);
+                    objectGraph.c[iterator] = this.graphData(obj[iterator]);
                 }
             }
         }
         if (is_1.default.builtFromModel(this.namespace, this.models, obj)) {
-            objectGraph.context = obj.constructor[this.namespace];
+            objectGraph.cx = obj.constructor[this.namespace];
         }
-        objectGraph.type = "object";
-        objectGraph.references = index;
+        objectGraph.t = "object";
+        objectGraph.r = index;
         return objectGraph;
     };
     /**
@@ -131,8 +131,8 @@ var DownCaster = /** @class */ (function () {
         if (index < 0) {
             index = (this.pointers.push(value)) - 1;
         }
-        primitiveGraph.type = typeof value;
-        primitiveGraph.references = index;
+        primitiveGraph.t = typeof value;
+        primitiveGraph.r = index;
         return primitiveGraph;
     };
     /**
@@ -140,7 +140,7 @@ var DownCaster = /** @class */ (function () {
      * of graphable
      */
     DownCaster.prototype.makeGraphable = function () {
-        return { references: 0, type: "" };
+        return { r: 0, t: "" };
     };
     /**
      * Stringifies the graph and pointers

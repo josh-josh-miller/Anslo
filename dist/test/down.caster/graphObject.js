@@ -13,11 +13,11 @@ function graphObject() {
         lister: list
     };
     var downer = new down_caster_1.DownCaster("name", {}, { something: obj, other: obj });
-    expect(downer.graph.references).toBe(0);
-    expect(downer.graph.type).toBe("object");
-    expect(typeof downer.graph.contents).toBe("object");
-    expect(typeof downer.graph.contents.something).toBe("object");
-    expect(typeof downer.graph.contents.something.contents).toBe("object");
-    expect(downer.graph.contents.other.contents).toBe(undefined);
+    expect(downer.graph.r).toBe(0);
+    expect(downer.graph.t).toBe("object");
+    expect(typeof downer.graph.c).toBe("object");
+    expect(typeof downer.graph.c.something).toBe("object");
+    expect(typeof downer.graph.c.something.c).toBe("object");
+    expect(downer.graph.c.other.c).toBe(undefined);
 }
 exports.graphObject = graphObject;

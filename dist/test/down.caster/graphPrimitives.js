@@ -12,12 +12,12 @@ function graphPrimitives() {
         word2: "word"
     };
     var downer = new down_caster_1.DownCaster("name", {}, data);
-    expect(downer.graph.references).toBe(0);
-    expect(downer.graph.type).toBe("object");
-    expect(typeof downer.graph.contents).toBe("object");
-    expect(downer.graph.contents.word.references).toBe(1);
-    expect(downer.graph.contents.word2.references).toBe(1);
-    expect(downer.graph.contents.word.type).toBe("string");
-    expect(downer.graph.contents.word2.type).toBe("string");
+    expect(downer.graph.r).toBe(0);
+    expect(downer.graph.t).toBe("object");
+    expect(typeof downer.graph.c).toBe("object");
+    expect(downer.graph.c.word.r).toBe(1);
+    expect(downer.graph.c.word2.r).toBe(1);
+    expect(downer.graph.c.word.t).toBe("string");
+    expect(downer.graph.c.word2.t).toBe("string");
 }
 exports.graphPrimitives = graphPrimitives;

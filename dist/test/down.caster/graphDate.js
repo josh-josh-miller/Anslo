@@ -13,12 +13,12 @@ function graphDate() {
         nower: now
     };
     var downer = new down_caster_1.DownCaster("name", {}, data);
-    expect(downer.graph.references).toBe(0);
-    expect(downer.graph.type).toBe("object");
-    expect(downer.graph.contents.now.references).toBe(1);
-    expect(downer.graph.contents.nower.references).toBe(1);
-    expect(downer.graph.contents.now.type).toBe("date");
-    expect(downer.graph.contents.nower.type).toBe("date");
-    expect(downer.graph.contents.now.value).toBeInstanceOf(Date);
+    expect(downer.graph.r).toBe(0);
+    expect(downer.graph.t).toBe("object");
+    expect(downer.graph.c.now.r).toBe(1);
+    expect(downer.graph.c.nower.r).toBe(1);
+    expect(downer.graph.c.now.t).toBe("date");
+    expect(downer.graph.c.nower.t).toBe("date");
+    expect(downer.graph.c.now.v).toBeInstanceOf(Date);
 }
 exports.graphDate = graphDate;

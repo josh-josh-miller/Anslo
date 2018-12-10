@@ -42,14 +42,29 @@ var Exceptions;
         throw new Exception(namespace, message);
     }
     Exceptions.blow = blow;
+    /**
+     * Throws an exception any time there is
+     * problem with graph in deserialization.
+     * @param namespace
+     */
     function invalidGraph(namespace) {
         throw new Exception(namespace, "Invalid graph; state has been corrupted. Could not parse.");
     }
     Exceptions.invalidGraph = invalidGraph;
+    /**
+     * Throws an error when the pointers property,
+     * in deserialization is not an array.
+     * @param namespace
+     */
     function invalidPointerSet(namespace) {
         throw new Exception(namespace, "Invalid pointer set; state has been corrupted. Could not parse.");
     }
     Exceptions.invalidPointerSet = invalidPointerSet;
+    /**
+     * Throws an error when deserialization
+     * can not find a pointer.
+     * @param namespace
+     */
     function invalidPointer(namespace) {
         throw new Exception(namespace, "Invalid pointer; state has been corrupted. Could not parse.");
     }

@@ -82,12 +82,12 @@ export class DownCaster {
         let index = this.pointers.indexOf(arr);
         if (index < 0) {
             index = (this.pointers.push(arr)) - 1;
-            arrayGraph.contents = {};
+            arrayGraph.c = {};
             arr.forEach((item, idx) =>
-                arrayGraph.contents[idx] = this.graphData(item))
+                arrayGraph.c[idx] = this.graphData(item))
         }
-        arrayGraph.type = "array";
-        arrayGraph.references = index;
+        arrayGraph.t = "array";
+        arrayGraph.r = index;
         return arrayGraph;
     }
 
@@ -101,9 +101,9 @@ export class DownCaster {
         if (index < 0) {
             index = (this.pointers.push(date)) - 1;
         }
-        dateGraph.type = "date";
-        dateGraph.references = index;
-        dateGraph.value = date;
+        dateGraph.t = "date";
+        dateGraph.r = index;
+        dateGraph.v = date;
         return dateGraph;
     }
 
@@ -116,18 +116,18 @@ export class DownCaster {
         let index = this.pointers.indexOf(obj);
         if (index < 0) {
             index = (this.pointers.push(obj)) - 1;
-            objectGraph.contents = {};
+            objectGraph.c = {};
             for (var iterator in obj) {
                 if (obj.hasOwnProperty(iterator)) {
-                    objectGraph.contents[iterator] = this.graphData(obj[iterator]);
+                    objectGraph.c[iterator] = this.graphData(obj[iterator]);
                 }
             }
         }
         if (Is.builtFromModel(this.namespace, this.models, obj)) {
-            objectGraph.context = obj.constructor[this.namespace];
+            objectGraph.cx = obj.constructor[this.namespace];
         }
-        objectGraph.type = "object";
-        objectGraph.references = index;
+        objectGraph.t = "object";
+        objectGraph.r = index;
         return objectGraph;
     }
 
@@ -141,8 +141,8 @@ export class DownCaster {
         if (index < 0) {
             index = (this.pointers.push(value)) - 1;
         }
-        primitiveGraph.type = typeof value;
-        primitiveGraph.references = index;
+        primitiveGraph.t = typeof value;
+        primitiveGraph.r = index;
         return primitiveGraph;
     }
 
@@ -151,7 +151,7 @@ export class DownCaster {
      * of graphable
      */
     public makeGraphable(): Graphable {
-        return { references: 0, type: "" }
+        return { r: 0, t: "" }
     }
 
     /**

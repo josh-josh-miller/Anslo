@@ -3,9 +3,9 @@ export function createGraph() {
     let downer = new DownCaster("name", {}, {
         name: "name"
     });
-    expect(downer.graph.references).toBe(0);
-    expect(downer.graph.type).toBe("object");
-    expect(typeof downer.graph.contents.name).toBe("object");
-    expect(downer.graph.contents.name.references).toBe(1);
-    expect(downer.graph.contents.name.type).toBe("string");
+    expect(downer.graph.r).toBe(0);
+    expect(downer.graph.t).toBe("object");
+    expect(typeof downer.graph.c.name).toBe("object");
+    expect(downer.graph.c.name.r).toBe(1);
+    expect(downer.graph.c.name.t).toBe("string");
 }

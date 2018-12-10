@@ -5,7 +5,7 @@ var exceptions_1 = require("../../src/exceptions");
 function graphTypeFail() {
     var data = {
         pointers: [],
-        graph: { type: undefined }
+        graph: { t: undefined }
     };
     expect(function () {
         new up_caster_1.UpCaster("name", {}, JSON.stringify(data));

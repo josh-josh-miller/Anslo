@@ -4,8 +4,8 @@ export function failUngraphObject() {
     let data = {
         pointers: [],
         graph: {
-            references: null,
-            type: "object"
+            r: null,
+            t: "object"
         }
     };
     expect(() => {

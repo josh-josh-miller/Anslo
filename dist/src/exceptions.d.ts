@@ -30,8 +30,23 @@ declare namespace Exceptions {
      * @param message
      */
     function blow(namespace: string, message: string): void;
+    /**
+     * Throws an exception any time there is
+     * problem with graph in deserialization.
+     * @param namespace
+     */
     function invalidGraph(namespace: string): void;
+    /**
+     * Throws an error when the pointers property,
+     * in deserialization is not an array.
+     * @param namespace
+     */
     function invalidPointerSet(namespace: string): void;
+    /**
+     * Throws an error when deserialization
+     * can not find a pointer.
+     * @param namespace
+     */
     function invalidPointer(namespace: string): void;
 }
 export default Exceptions;

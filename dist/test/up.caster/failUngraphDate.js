@@ -5,21 +5,21 @@ var exceptions_1 = require("../../src/exceptions");
 function failUngraphDate() {
     expect(function () {
         var data = {
-            graph: { type: "date", references: "lsdf" },
+            graph: { t: "date", r: "lsdf" },
             pointers: []
         };
         new up_caster_1.UpCaster("name", {}, JSON.stringify(data));
     }).toThrow(exceptions_1.default.Exception);
     expect(function () {
         var data = {
-            graph: { type: "date", references: 0 },
+            graph: { t: "date", r: 0 },
             pointers: []
         };
         new up_caster_1.UpCaster("name", {}, JSON.stringify(data));
     }).toThrow(exceptions_1.default.Exception);
     expect(function () {
         var data = {
-            graph: { type: "date", references: 0, value: new Date().toISOString() },
+            graph: { t: "date", r: 0, v: new Date().toISOString() },
             pointers: []
         };
         new up_caster_1.UpCaster("name", {}, JSON.stringify(data));

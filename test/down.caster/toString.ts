@@ -8,7 +8,7 @@ export function toString() {
     let string = downer.toString();
     let stringWithSpaces = downer.toString(4);
     expect(typeof string).toBe("string");
-    expect(string.length).toBe(159);
+    expect(string.length).toBe(116);
     expect(typeof stringWithSpaces).toBe("string");
-    expect(stringWithSpaces.length).toBe(365);
+    expect(stringWithSpaces.length).toBe(322);
 }

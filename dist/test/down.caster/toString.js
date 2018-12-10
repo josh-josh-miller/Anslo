@@ -10,8 +10,8 @@ function toString() {
     var string = downer.toString();
     var stringWithSpaces = downer.toString(4);
     expect(typeof string).toBe("string");
-    expect(string.length).toBe(159);
+    expect(string.length).toBe(116);
     expect(typeof stringWithSpaces).toBe("string");
-    expect(stringWithSpaces.length).toBe(365);
+    expect(stringWithSpaces.length).toBe(322);
 }
 exports.toString = toString;

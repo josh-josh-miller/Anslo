@@ -14,8 +14,8 @@ function failUngraphPrimitive() {
     var data = {
         pointers: [],
         graph: {
-            references: null,
-            type: "string"
+            r: null,
+            t: "string"
         }
     };
     expect(function () {
