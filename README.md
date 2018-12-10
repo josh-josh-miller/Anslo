@@ -96,3 +96,60 @@ computing is available; use a <b>post-quantum</b> algorithm.
 <blockquote>
     "Be Kind and <strike>Rewind</strike> Encrypt Everything"
 </blockquote>
+
+
+### Caveats
+
+* Properties that are functions will be serialized to <b>null</b>. Use classes with methods to provide functionality.
+
+### What does the serialized string look like?
+Let's say we were to run this bit of code...
+```js
+let data = [{
+    name: "something",
+    date: new Date()
+}]
+
+/**
+ * The second argument is the number of
+ * spaces used to beautify the serialization.
+ */
+let string = anslo.down(data, 4)
+console.log(string);
+```
+
+```json
+{
+    "pointers": [
+        [],
+        {},
+        "something",
+        {}
+    ],
+    "graph": {
+        "r": 0,
+        "t": "array",
+        "c": {
+            "0": {
+                "r": 1,
+                "t": "object",
+                "c": {
+                    "name": {
+                        "r": 2,
+                        "t": "string"
+                    },
+                    "date": {
+                        "r": 3,
+                        "t": "date",
+                        "v": "2018-12-10T06:36:05.620Z"
+                    }
+                }
+            }
+        }
+    }
+}
+```
+Minified, it would look like this.
+```json
+{"pointers":[[],{},"something",{}],"graph":{"r":0,"t":"array","c":{"0":{"r":1,"t":"object","c":{"name":{"r":2,"t":"string"},"date":{"r":3,"t":"date","v":"2018-12-10T06:40:51.342Z"}}}}}}
+```
