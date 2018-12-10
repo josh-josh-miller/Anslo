@@ -2,7 +2,6 @@ import { ModelCollection } from "./interface/model.collection";
 import Is from "./utils/is";
 import Assign from "./assign";
 import { DownCaster } from "./down.caster";
-import { Cryptobox } from "./utils/cryptobox";
 import { UpCaster } from "./up.caster";
 import Exceptions from "./exceptions";
 
@@ -43,16 +42,11 @@ export class Anslo {
 
     /**
      * Takes an instance of anything and
-     * serializes it down to a string. If a 
-     * key is supplied the string contain will
-     * be encrypted with AES-256-CBC with an IV(16)
+     * serializes it down to a string.
      * @param instance 
      */
-    public down(instance: any, key: string = null, spaces: number = null) {
+    public down(instance: any, spaces: number = null) {
         let down = new DownCaster(this.namespace, this.models, instance);
-        if (key !== null) {
-            return Cryptobox.encrypt(down.toString(spaces), key);
-        }
         return down.toString(spaces);
     }
 
@@ -61,17 +55,11 @@ export class Anslo {
      * Takes a string that what serialized, and
      * given the same setup, will parse recursively
      * back to its original state, all the while, 
-     * remembering state. If a key is supplied, the contents
-     * with be decrypted before casting up.
+     * remembering state. 
      * @param data 
      */
-    public up<Context>(data: string, key: string = null): Context {
-        if (key !== null) {
-            let up = new UpCaster(this.namespace, this.models, Cryptobox.decrypt(data, key));
-            return up.toInstance<Context>();
-        } else {
-            let up = new UpCaster(this.namespace, this.models, data);
-            return up.toInstance<Context>();
-        }
+    public up<Context>(data: string): Context {
+        let up = new UpCaster(this.namespace, this.models, data);
+        return up.toInstance<Context>();
     }
 }

@@ -7,7 +7,6 @@ var testing_3 = require("./down.caster/testing");
 var testing_4 = require("./exceptions/testing");
 var testing_5 = require("./up.caster/testing");
 var testing_6 = require("./@utils/is/testing");
-var testing_7 = require("./@utils/cryptobox/testing");
 describe("Anslo", function () {
     describe("anslo", testing_1.ansloTesting);
     describe("assign", testing_2.assignTesting);
@@ -15,5 +14,4 @@ describe("Anslo", function () {
     describe("exceptions", testing_4.exceptionsTesting);
     describe("up.caster", testing_5.upcasterTesting);
     describe("utils/is", testing_6.isTesting);
-    describe("utils/cryptobox", testing_7.cryptoboxTesting);
 });
