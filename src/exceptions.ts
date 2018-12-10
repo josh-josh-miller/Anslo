@@ -40,14 +40,29 @@ namespace Exceptions {
         throw new Exception(namespace, message);
     }
 
+    /**
+     * Throws an exception any time there is 
+     * problem with graph in deserialization.
+     * @param namespace 
+     */
     export function invalidGraph(namespace: string) {
         throw new Exception(namespace, "Invalid graph; state has been corrupted. Could not parse.");
     }
 
+    /**
+     * Throws an error when the pointers property,
+     * in deserialization is not an array.
+     * @param namespace 
+     */
     export function invalidPointerSet(namespace: string) {
         throw new Exception(namespace, "Invalid pointer set; state has been corrupted. Could not parse.")
     }
 
+    /**
+     * Throws an error when deserialization 
+     * can not find a pointer.
+     * @param namespace 
+     */
     export function invalidPointer(namespace: string) {
         throw new Exception(namespace, "Invalid pointer; state has been corrupted. Could not parse.")
     }
