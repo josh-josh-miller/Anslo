@@ -1,56 +1,98 @@
 # Anslo
-A json serializer/parser that can remember state.
+A serializer/deserializer that can serialize pointer references and remember context.
 
-### Installation
 ```bash
 npm install --save anslo
 ```
 
-Let's say you are working with Electron and you would like to save
-state to a file. You wished that there was a great way to 
-get all that data back just the way you saved it. How would Anslo handle
-the serialization?
+### How does it work?
+```js
+const Anslo = require("anslo");
 
-We create our model.
-```ts
-namespace Model {
-    export class User {
-        public name: string;
-        public email: string;
-    }
-}
+/**
+ * Create an instance
+ **/
+let anslo = new Anslo();
 
-export default Model;
+
+/**
+ * Create an instance of something
+ * you would like to serialize
+ **/ 
+let user = new User();
+
+/**
+ * Do cool things like self referencing
+ **/
+user.self = user;
+
+/**
+ * Serialize data down to a string
+ **/
+let string = anslo.down(user)
+
+/**
+ * Deserialize back to original state
+ **/
+let newUser = anslo.up(string);
+
+/**
+ * Done!!
+ **/
+console.log(newUser === newUser.self); //outputs: true
+
 ```
 
-```ts
-//Import it..
-import Anslo = require("anslo");
+### What about remembering context? Let's use the same example.
+```js
+const Anslo = require("anslo");
 
-//-------
+/**
+ * Create an instance
+ * 
+ * [Context]
+ * Provide an object of constructors that
+ * you would like to have Anslo remember, 
+ * and when they are revived, the pointer
+ * will be an instance of the context provided
+ **/
+let anslo = new Anslo({ User });
 
-let anslo = new Anslo(Model);
 
-//-----------------
+/**
+ * Create an instance of something
+ * you would like to serialize
+ **/ 
+let user = new User();
 
-//Create our user to stringify
-let user = new Model.User();
-user.name = "something"
+/**
+ * Do cool things like self referencing
+ **/
+user.self = user;
 
-//-------------------
+/**
+ * Serialize data down to a string
+ **/
+let string = anslo.down(user)
 
-//We stringify the user
-let down = anslo.stringify({
-    user,
-    arrayOfUsers: [ user, user, user ]
-    ready: true
-});
+/**
+ * Deserialize back to original state
+ **/
+let newUser = anslo.up(string);
 
-// Anslo recursively parses the user back to its original state.
-let up = anslo.parse(down);
+/**
+ * Done!!
+ **/
+console.log(newUser === newUser.self); //outputs: true
 
-//expect(up.user).toBeInstanceOf(Model.User)
-//=>true
 ```
+### Security Considerations
+Serializing state down to a string and reviving it to its original state
+raises strong security concerns. If there are any questions at all about 
+where serializations come from, use encryption and a signature to verify 
+you made it. Moreover, we are soon to be living in an time where quantum 
+computing is available; use a <b>post-quantum</b> algorithm.
 
-That's it.
+<blockquote>
+    "Be Kind and <strike>Rewind</strike> Encrypt Everything"
+</blockquote>
