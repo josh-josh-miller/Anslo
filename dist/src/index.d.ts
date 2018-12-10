@@ -1,2 +1,2 @@
-import Anslo from "./anslo";
+import { Anslo } from "./anslo";
 export = Anslo;

@@ -1,40 +1,39 @@
-import { EntityCollection } from "./interfaces/entity.collection";
+import { ModelCollection } from "./interface/model.collection";
 /**
- * Represents the definition
- * of Anslo
+ * Definition for the an instance
+ * of Anslo.
  */
-export default class Anslo {
-    private entities;
+export declare class Anslo {
+    /**
+     * Holds context for custom types
+     * during serialization.
+     */
+    private models;
+    /**
+     * the name for the instance of anslo
+     */
     private namespace;
     /**
-     * The name tag for the instance.
-     *
-     * Since the entities (constructors) could
-     * possibly have differing names for each instance,
-     * it's important the anslo keep with it's own naming
-     * convention. It does this via the tag.
-     */
-    tag: string;
-    /**
      * Creates an instance of Anslo
-     *
-     * @param entities an object of constructables that will need to be remembered.
-     * @param namespace The name for this instance
+     * @param models Key, value pair of context for serialization.
+     * @param namespace the name for the instance of anslo
      */
-    constructor(entities?: EntityCollection, namespace?: string);
+    constructor(models?: ModelCollection, namespace?: string);
     /**
-     * Takes any variable and stringifies
-     * it and in cases instances of constructors
-     * pre-disclosed, it will serialize the data
-     * with an ear mark to remember state.
-     * @param context
+     * Takes an instance of anything and
+     * serializes it down to a string. If a
+     * key is supplied the string contain will
+     * be encrypted with AES-256-CBC with an IV(16)
+     * @param instance
      */
-    stringify(context: any, spaces?: number): string;
+    down(instance: any, key?: string, spaces?: number): string;
     /**
-     * Parses and datastring back into it's original
-     * state contigent on the list of constructors
-     * provided.
-     * @param dataString
+     * Takes a string that what serialized, and
+     * given the same setup, will parse recursively
+     * back to its original state, all the while,
+     * remembering state. If a key is supplied, the contents
+     * with be decrypted before casting up.
+     * @param data
      */
-    parse<Context>(dataString: string): Context;
+    up<Context>(data: string, key?: string): Context;
 }

@@ -1,77 +1,78 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var errors_1 = require("./errors");
-var checker_1 = require("./checker");
-var assignments_1 = require("./assignments");
+var is_1 = require("./utils/is");
+var assign_1 = require("./assign");
+var down_caster_1 = require("./down.caster");
+var cryptobox_1 = require("./utils/cryptobox");
+var up_caster_1 = require("./up.caster");
+var exceptions_1 = require("./exceptions");
 /**
- * Represents the definition
- * of Anslo
+ * Definition for the an instance
+ * of Anslo.
  */
 var Anslo = /** @class */ (function () {
     /**
      * Creates an instance of Anslo
-     *
-     * @param entities an object of constructables that will need to be remembered.
-     * @param namespace The name for this instance
+     * @param models Key, value pair of context for serialization.
+     * @param namespace the name for the instance of anslo
      */
-    function Anslo(entities, namespace) {
-        if (entities === void 0) { entities = {}; }
+    function Anslo(models, namespace) {
+        if (models === void 0) { models = {}; }
         if (namespace === void 0) { namespace = "main"; }
-        this.entities = entities;
-        this.namespace = namespace;
         /**
-         * The name tag for the instance.
-         *
-         * Since the entities (constructors) could
-         * possibly have differing names for each instance,
-         * it's important the anslo keep with it's own naming
-         * convention. It does this via the tag.
+         * Holds context for custom types
+         * during serialization.
          */
-        this.tag = "@~";
-        this.tag += typeof namespace === "string" ? namespace : "unknown";
-        if (checker_1.default.isObj(entities)) {
-            checker_1.default.everyPropertyIsConstructable(entities);
-            assignments_1.default.assignTagsToEntites(entities, this.tag);
+        this.models = {};
+        /**
+         * the name for the instance of anslo
+         */
+        this.namespace = "@~anslo.";
+        if (is_1.default.obj(models)) {
+            this.namespace += namespace;
+            this.models = Object.assign(this.models, models);
+            is_1.default.everyPropertyConstructable(this.namespace, this.models); //blow if not;
+            assign_1.default.namespaceToModels(this.namespace, this.models);
         }
         else {
-            errors_1.ansloError("Type (" + typeof entities + ") can not be used as an entity.");
+            exceptions_1.default.blow(this.namespace, "On construction, new Anslo( ===> models <===) was not an object of constructors.");
         }
     }
     /**
-     * Takes any variable and stringifies
-     * it and in cases instances of constructors
-     * pre-disclosed, it will serialize the data
-     * with an ear mark to remember state.
-     * @param context
+     * Takes an instance of anything and
+     * serializes it down to a string. If a
+     * key is supplied the string contain will
+     * be encrypted with AES-256-CBC with an IV(16)
+     * @param instance
      */
-    Anslo.prototype.stringify = function (context, spaces) {
+    Anslo.prototype.down = function (instance, key, spaces) {
+        if (key === void 0) { key = null; }
         if (spaces === void 0) { spaces = null; }
-        assignments_1.default.assignTagsToContext(this.entities, context, this.tag);
-        var dataString = JSON.stringify(context, null, spaces ? spaces : void 0);
-        assignments_1.default.unassignTagsToContext(this.entities, context, this.tag);
-        return dataString;
+        var down = new down_caster_1.DownCaster(this.namespace, this.models, instance);
+        if (key !== null) {
+            return cryptobox_1.Cryptobox.encrypt(down.toString(spaces), key);
+        }
+        return down.toString(spaces);
     };
     /**
-     * Parses and datastring back into it's original
-     * state contigent on the list of constructors
-     * provided.
-     * @param dataString
+     * Takes a string that what serialized, and
+     * given the same setup, will parse recursively
+     * back to its original state, all the while,
+     * remembering state. If a key is supplied, the contents
+     * with be decrypted before casting up.
+     * @param data
      */
-    Anslo.prototype.parse = function (dataString) {
-        var _this = this;
-        return JSON.parse(dataString, function (key, value) {
-            var date = assignments_1.default.parseDate(_this.entities, value);
-            if (date !== false) {
-                return date;
-            }
-            if (checker_1.default.isObj(value) && value !== undefined) {
-                if (checker_1.default.isInstanceReferencePresent(_this.entities, value, _this.tag)) {
-                    return assignments_1.default.spinInstance(_this.entities, value, _this.tag);
-                }
-            }
-            return value;
-        });
+    Anslo.prototype.up = function (data, key) {
+        if (key === void 0) { key = null; }
+        if (key !== null) {
+            var up = new up_caster_1.UpCaster(this.namespace, this.models, cryptobox_1.Cryptobox.decrypt(data, key));
+            return up.toInstance();
+        }
+        else {
+            var up = new up_caster_1.UpCaster(this.namespace, this.models, data);
+            return up.toInstance();
+        }
     };
     return Anslo;
 }());
-exports.default = Anslo;
+exports.Anslo = Anslo;

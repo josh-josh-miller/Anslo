@@ -4,16 +4,16 @@ var Model;
 (function (Model) {
     var User = /** @class */ (function () {
         function User() {
-            this.name = "Bob Something";
-            this.email = "bobsomething@gmail.com";
-            this.created = new Date();
+            this.name = "name";
+            this.email = "email";
             this.meta = new UserMeta();
-            this.somethings = [];
+            this.created = new Date();
+            this.posts = [];
             this.createPosts();
         }
         User.prototype.createPosts = function () {
             for (var i = 0; i < 100; i++) {
-                this.somethings.push(new Post());
+                this.posts.push(new Post());
             }
         };
         return User;
@@ -28,8 +28,8 @@ var Model;
     Model.UserMeta = UserMeta;
     var Post = /** @class */ (function () {
         function Post() {
-            this.title = "This is the title";
-            this.post = "This is the content";
+            this.title = "title";
+            this.post = "content";
             this.created = new Date();
         }
         return Post;

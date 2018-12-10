@@ -2,9 +2,9 @@ declare namespace Model {
     class User {
         name: string;
         email: string;
-        created: Date;
         meta: UserMeta;
-        somethings: Post[];
+        created: Date;
+        posts: Post[];
         constructor();
         createPosts(): void;
     }
