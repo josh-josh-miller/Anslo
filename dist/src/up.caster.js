@@ -32,7 +32,7 @@ var UpCaster = /** @class */ (function () {
             return JSON.parse(str);
         }
         catch (err) {
-            exceptions_1.default.blow(this.namespace, "Could parse string. Make sure you are using the encryption key if the source is encrypted.");
+            exceptions_1.default.blow(this.namespace, "Could not parse string.");
         }
     };
     /**
