@@ -43,7 +43,7 @@ export class UpCaster {
         } catch (err) {
             Exceptions.blow(
                 this.namespace,
-                `Could parse string. Make sure you are using the encryption key if the source is encrypted.`
+                `Could parse string.`
             )
         }
     }
