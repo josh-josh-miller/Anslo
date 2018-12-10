@@ -1,33 +1,32 @@
 namespace Model {
 
     export class User {
-        name: string = "Bob Something";
-        email: string = "bobsomething@gmail.com";
-        created: Date = new Date();
-        meta = new UserMeta();
-        public somethings: Post[] = []
+        public name: string = "name";
+        public email: string = "email";
+        public meta: UserMeta = new UserMeta();
+        public created: Date = new Date();
+        public posts: Post[] = []
 
-        constructor() {
+        public constructor() {
             this.createPosts();
         }
 
         public createPosts() {
             for (var i = 0; i < 100; i++) {
-                this.somethings.push(new Post());
+                this.posts.push(new Post());
             }
         }
     }
 
     export class UserMeta {
-        settings = true
+        public settings: boolean = true
     }
 
     export class Post {
-        title: string = "This is the title";
-        post: string = "This is the content";
-        created: Date = new Date();
+        public title: string = "title";
+        public post: string = "content";
+        public created: Date = new Date();
     }
-
 
 }
 

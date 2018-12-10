@@ -1,6 +1,18 @@
 import "jest";
-import { instanceTesting } from "./instance/testing";
+import { ansloTesting } from "./anslo/testing";
+import { assignTesting } from "./assign/testing";
+import { downcasterTesting } from "./down.caster/testing";
+import { exceptionsTesting } from "./exceptions/testing";
+import { upcasterTesting } from "./up.caster/testing";
+import { isTesting } from "./@utils/is/testing";
+import { cryptoboxTesting } from "./@utils/cryptobox/testing";
 
 describe("Anslo", () => {
-    describe("Anslo Instance", instanceTesting);
+    describe("anslo", ansloTesting);
+    describe("assign", assignTesting);
+    describe("down.caster", downcasterTesting);
+    describe("exceptions", exceptionsTesting);
+    describe("up.caster", upcasterTesting);
+    describe("utils/is", isTesting);
+    describe("utils/cryptobox", cryptoboxTesting);
 })
