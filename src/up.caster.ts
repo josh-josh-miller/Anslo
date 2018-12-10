@@ -43,7 +43,7 @@ export class UpCaster {
         } catch (err) {
             Exceptions.blow(
                 this.namespace,
-                `Could parse string.`
+                `Could not parse string.`
             )
         }
     }
