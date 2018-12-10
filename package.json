@@ -30,7 +30,7 @@
     "collectCoverage": true,
     "collectCoverageFrom": [
       "dist/src/**/*.js",
-      "!**dist/src/interfaces/**"
+      "!**dist/src/interface/**"
     ],
     "verbose": true,
     "testURL": "http://localhost/"
