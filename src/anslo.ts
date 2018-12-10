@@ -1,77 +1,77 @@
-import { ansloError } from "./errors";
-import Checker from "./checker";
-import Assignments from "./assignments";
-import { EntityCollection } from "./interfaces/entity.collection";
-
-
-
+import { ModelCollection } from "./interface/model.collection";
+import Is from "./utils/is";
+import Assign from "./assign";
+import { DownCaster } from "./down.caster";
+import { Cryptobox } from "./utils/cryptobox";
+import { UpCaster } from "./up.caster";
+import Exceptions from "./exceptions";
 
 /**
- * Represents the definition
- * of Anslo
+ * Definition for the an instance
+ * of Anslo.
  */
-export default class Anslo {
+export class Anslo {
+    /**
+     * Holds context for custom types
+     * during serialization.
+     */
+    private models: ModelCollection = {};
 
     /**
-     * The name tag for the instance.
-     * 
-     * Since the entities (constructors) could
-     * possibly have differing names for each instance,
-     * it's important the anslo keep with it's own naming
-     * convention. It does this via the tag.
+     * the name for the instance of anslo
      */
-    public tag: string = "@~";
+    private namespace: string = "@~anslo.";
 
     /**
      * Creates an instance of Anslo
-     * 
-     * @param entities an object of constructables that will need to be remembered. 
-     * @param namespace The name for this instance
+     * @param models Key, value pair of context for serialization.
+     * @param namespace the name for the instance of anslo
      */
-    public constructor(private entities: EntityCollection = {}, private namespace: string = "main") {
-        this.tag += typeof namespace === "string" ? namespace : "unknown";
-        if (Checker.isObj(entities)) {
-            Checker.everyPropertyIsConstructable(entities);
-            Assignments.assignTagsToEntites(entities, this.tag);
+    public constructor(models: ModelCollection = {}, namespace: string = "main") {
+        if (Is.obj(models)) {
+            this.namespace += namespace;
+            this.models = Object.assign(this.models, models);
+            Is.everyPropertyConstructable(this.namespace, this.models); //blow if not;
+            Assign.namespaceToModels(this.namespace, this.models);
         } else {
-            ansloError(`Type (${typeof entities}) can not be used as an entity.`)
+            Exceptions.blow(
+                this.namespace,
+                `On construction, new Anslo( ===> models <===) was not an object of constructors.`
+            );
         }
     }
 
-
     /**
-     * Takes any variable and stringifies 
-     * it and in cases instances of constructors
-     * pre-disclosed, it will serialize the data 
-     * with an ear mark to remember state.
-     * @param context 
+     * Takes an instance of anything and
+     * serializes it down to a string. If a 
+     * key is supplied the string contain will
+     * be encrypted with AES-256-CBC with an IV(16)
+     * @param instance 
      */
-    public stringify(context: any, spaces: number = null): string {
-        Assignments.assignTagsToContext(this.entities, context, this.tag);
-        let dataString = JSON.stringify(context, null, spaces ? spaces : void 0);
-        Assignments.unassignTagsToContext(this.entities, context, this.tag);
-        return dataString;
+    public down(instance: any, key: string = null, spaces: number = null) {
+        let down = new DownCaster(this.namespace, this.models, instance);
+        if (key !== null) {
+            return Cryptobox.encrypt(down.toString(spaces), key);
+        }
+        return down.toString(spaces);
     }
 
-    /**
-     * Parses and datastring back into it's original
-     * state contigent on the list of constructors 
-     * provided.
-     * @param dataString 
-     */
-    public parse<Context>(dataString: string): Context {
-        return JSON.parse(dataString, (key, value) => {
-            let date = Assignments.parseDate(this.entities, value);
-            if (date !== false) {
-                return date;
-            }
-            if (Checker.isObj(value) && value !== undefined) {
-                if (Checker.isInstanceReferencePresent(this.entities, value, this.tag)) {
-                    return Assignments.spinInstance(this.entities, value, this.tag);
-                }
-            }
-            return value;
-        })
-    }
 
+    /**
+     * Takes a string that what serialized, and
+     * given the same setup, will parse recursively
+     * back to its original state, all the while, 
+     * remembering state. If a key is supplied, the contents
+     * with be decrypted before casting up.
+     * @param data 
+     */
+    public up<Context>(data: string, key: string = null): Context {
+        if (key !== null) {
+            let up = new UpCaster(this.namespace, this.models, Cryptobox.decrypt(data, key));
+            return up.toInstance<Context>();
+        } else {
+            let up = new UpCaster(this.namespace, this.models, data);
+            return up.toInstance<Context>();
+        }
+    }
 }
