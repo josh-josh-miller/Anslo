@@ -144,7 +144,7 @@ var UpCaster = /** @class */ (function () {
                     return pointer;
                 }
                 else {
-                    var instance_1 = this.pointers[graph.r] = new model;
+                    var instance_1 = this.pointers[graph.r] = Object.create(model.prototype);
                     for (var instanceIterator in graph.c) {
                         instance_1[instanceIterator] = this.ungraphData(graph.c[instanceIterator]);
                     }

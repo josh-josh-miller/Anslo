@@ -139,7 +139,7 @@ export class UpCaster {
                 if (pointer instanceof model) {
                     return pointer
                 } else {
-                    let instance = this.pointers[graph.r] = new model;
+                    let instance = this.pointers[graph.r] = Object.create(model.prototype)
                     for (var instanceIterator in graph.c) {
                         instance[instanceIterator] = this.ungraphData(graph.c[instanceIterator]);
                     }
