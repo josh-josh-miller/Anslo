@@ -6,21 +6,8 @@ import { failUngraphDate } from "./failUngraphDate";
 import { multipleDateSinglePointer } from "./multipleDateSinglePointer";
 import { failUngraphObject } from "./failUngraphObject";
 import { contextInstancePointer } from "./contextInstancePointer";
-import { UpCaster } from "../../src/up.caster";
-import Exceptions from "../../src/exceptions";
-
-function failUngraphPrimitive() {
-    let data = {
-        pointers: [],
-        graph: {
-            r: null,
-            t: "string"
-        }
-    }
-    expect(() => {
-        new UpCaster("name", {}, JSON.stringify(data))
-    }).toThrow(Exceptions.Exception);
-}
+import { failUngraphPrimitive } from "./failUngraphPrimitive";
+import { testObjectCreateInstance } from "./testObjectCreateInstance";
 
 export function upcasterTesting() {
     test("It should fail with the when not presented with a valid json string", jsonFail);
@@ -32,4 +19,5 @@ export function upcasterTesting() {
     test("It should be able to recognize context instance pointer", contextInstancePointer)
     test("It should be able to handle the date pointer construction in upgraphing date", multipleDateSinglePointer);
     test("It should fail in ungraphing a primitive", failUngraphPrimitive)
+    test("it should be able to create instance with constructor properties", testObjectCreateInstance);
 }

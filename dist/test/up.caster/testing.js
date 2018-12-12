@@ -8,20 +8,8 @@ var failUngraphDate_1 = require("./failUngraphDate");
 var multipleDateSinglePointer_1 = require("./multipleDateSinglePointer");
 var failUngraphObject_1 = require("./failUngraphObject");
 var contextInstancePointer_1 = require("./contextInstancePointer");
-var up_caster_1 = require("../../src/up.caster");
-var exceptions_1 = require("../../src/exceptions");
-function failUngraphPrimitive() {
-    var data = {
-        pointers: [],
-        graph: {
-            r: null,
-            t: "string"
-        }
-    };
-    expect(function () {
-        new up_caster_1.UpCaster("name", {}, JSON.stringify(data));
-    }).toThrow(exceptions_1.default.Exception);
-}
+var failUngraphPrimitive_1 = require("./failUngraphPrimitive");
+var testObjectCreateInstance_1 = require("./testObjectCreateInstance");
 function upcasterTesting() {
     test("It should fail with the when not presented with a valid json string", jsonFail_1.jsonFail);
     test("It should fail when give a json object that does not match schema", schemaFail_1.schemaFail);
@@ -31,6 +19,7 @@ function upcasterTesting() {
     test("It should fail in ungraphing an object", failUngraphObject_1.failUngraphObject);
     test("It should be able to recognize context instance pointer", contextInstancePointer_1.contextInstancePointer);
     test("It should be able to handle the date pointer construction in upgraphing date", multipleDateSinglePointer_1.multipleDateSinglePointer);
-    test("It should fail in ungraphing a primitive", failUngraphPrimitive);
+    test("It should fail in ungraphing a primitive", failUngraphPrimitive_1.failUngraphPrimitive);
+    test("it should be able to create instance with constructor properties", testObjectCreateInstance_1.testObjectCreateInstance);
 }
 exports.upcasterTesting = upcasterTesting;
