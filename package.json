@@ -21,7 +21,9 @@
   "devDependencies": {
     "@types/jest": "^22.2.0",
     "@types/node": "^10.17.6",
+    "braces": "^3.0.2",
     "jest": "^22.4.2",
+    "mem": "^6.0.1",
     "ts-jest": "^23.10.5",
     "typescript": "^2.7.2"
   },
@@ -34,5 +36,6 @@
     ],
     "verbose": true,
     "testURL": "http://localhost/"
-  }
+  },
+  "dependencies": {}
 }
