@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`anslo can blow on bad model 1`] = `"On construction, new Anslo( ===> models <===) was not an object of constructors."`;
+
+exports[`anslo can serialize and deserialize 1`] = `"{\\"pointers\\":[{},[],1,2,3,4,5,6,{}],\\"graph\\":{\\"r\\":0,\\"t\\":\\"object\\",\\"c\\":{\\"listOfNumbers\\":{\\"r\\":1,\\"t\\":\\"array\\",\\"c\\":{\\"0\\":{\\"r\\":2,\\"t\\":\\"number\\"},\\"1\\":{\\"r\\":3,\\"t\\":\\"number\\"},\\"2\\":{\\"r\\":4,\\"t\\":\\"number\\"},\\"3\\":{\\"r\\":5,\\"t\\":\\"number\\"},\\"4\\":{\\"r\\":6,\\"t\\":\\"number\\"},\\"5\\":{\\"r\\":7,\\"t\\":\\"number\\"}}},\\"created\\":{\\"r\\":8,\\"t\\":\\"date\\",\\"v\\":\\"2022-10-10T00:00:00.000Z\\"},\\"self\\":{\\"r\\":0,\\"t\\":\\"object\\",\\"cx\\":\\"User\\"}},\\"cx\\":\\"User\\"}}"`;
+
+exports[`anslo can serialize with spaces 1`] = `
+"{
+    \\"pointers\\": [
+        {},
+        [],
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        {}
+    ],
+    \\"graph\\": {
+        \\"r\\": 0,
+        \\"t\\": \\"object\\",
+        \\"c\\": {
+            \\"listOfNumbers\\": {
+                \\"r\\": 1,
+                \\"t\\": \\"array\\",
+                \\"c\\": {
+                    \\"0\\": {
+                        \\"r\\": 2,
+                        \\"t\\": \\"number\\"
+                    },
+                    \\"1\\": {
+                        \\"r\\": 3,
+                        \\"t\\": \\"number\\"
+                    },
+                    \\"2\\": {
+                        \\"r\\": 4,
+                        \\"t\\": \\"number\\"
+                    },
+                    \\"3\\": {
+                        \\"r\\": 5,
+                        \\"t\\": \\"number\\"
+                    },
+                    \\"4\\": {
+                        \\"r\\": 6,
+                        \\"t\\": \\"number\\"
+                    },
+                    \\"5\\": {
+                        \\"r\\": 7,
+                        \\"t\\": \\"number\\"
+                    }
+                }
+            },
+            \\"created\\": {
+                \\"r\\": 8,
+                \\"t\\": \\"date\\",
+                \\"v\\": \\"2022-10-10T00:00:00.000Z\\"
+            },
+            \\"self\\": {
+                \\"r\\": 0,
+                \\"t\\": \\"object\\",
+                \\"cx\\": \\"User\\"
+            }
+        },
+        \\"cx\\": \\"User\\"
+    }
+}"
+`;
+
+exports[`anslo fails to parse an invalid string 1`] = `"Could not parse string."`;

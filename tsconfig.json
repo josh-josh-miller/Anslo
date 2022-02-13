@@ -1,16 +1,12 @@
 {
-    "compilerOptions": {
-        "target": "es5",
-        "module": "commonjs",
-        "allowSyntheticDefaultImports": true,
-        "lib": [
-            "es2015",
-            "es2015.promise",
-            "dom",
-            "scripthost"
-        ],
-        "declaration": true,
-        "outDir": "./dist",
-        "moduleResolution": "node"
-    }
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "allowSyntheticDefaultImports": true,
+    "lib": ["es2015", "es2015.promise", "dom", "scripthost"],
+    "declaration": true,
+    "outDir": "./dist",
+    "moduleResolution": "node"
+  },
+  "include": ["src", "test"]
 }
